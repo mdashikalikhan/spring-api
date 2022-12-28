@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GetCourseDetailResponse
+	xmlns="http://www.example.org/course-details"
+	xsi:schemaLocation="http://www.example.org/course-details course-details.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<CouseDetails>
+		<id>12</id>
+		<name>Course1</name>
+		<description>Learn REST</description>
+
+	</CouseDetails>
+</GetCourseDetailResponse>
