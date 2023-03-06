@@ -4,6 +4,10 @@ import java.net.URI;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,14 +36,20 @@ public class UserResource {
 	}
 	
 	@GetMapping("/users/{id}")
-	public User retrieveUser(@PathVariable int id){
+	public EntityModel<User> retrieveUser(@PathVariable int id){
 		User user =  service.findOne(id);
 		
 		if(user==null) {
-			throw new UserNotFoundException("Not Found");
+			throw new UserNotFoundException("Not Found id:" + id);
 		}
 		
-		return user;
+		EntityModel model = EntityModel.of(user);
+		
+		WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+		
+		model.add(link.withRel("all-users"));
+		
+		return model;
 	}
 	
 	@PostMapping("/users")
